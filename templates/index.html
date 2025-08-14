@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Agent</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎙️ Voice Agent</h1>
+
+    <!-- Single Record Button -->
+    <button id="record-btn" class="mic-button">🎤 Start Recording</button>
+
+    <!-- Status & Transcription -->
+    <div id="upload-status" class="status-text"></div>
+    <div id="transcription" class="transcription-text"></div>
+
+    <!-- Hidden Audio Player -->
+    <audio id="echo-audio" style="display:none;"></audio>
+
+    <!-- Download Link -->
+    <a id="download-link" href="#" style="display: none;" target="_blank">
+      ⬇️ Download your recording
+    </a>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
