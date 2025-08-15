@@ -1,3 +1,4 @@
+/* existing script.js content (unchanged) */
 function getSessionId() {
   const urlParams = new URLSearchParams(window.location.search);
   let sessionId = urlParams.get("session_id");
@@ -67,7 +68,9 @@ async function startRecording() {
         }
 
         statusDiv.innerText = "✅ Response ready.";
-        transcriptDiv.innerText = `You said: ${result.transcription || "(no speech detected)"}\n\nLLM: ${result.llm_response}`;
+        transcriptDiv.innerText = `You said: ${result.transcription || "(no speech detected)"}
+
+LLM: ${result.llm_response}`;
 
         echoAudio.src = result.audio_url;
         echoAudio.play();
