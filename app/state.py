@@ -1,0 +1,1 @@
+SESSION_KEYS: dict[str, dict[str, str]] = {}

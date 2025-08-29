@@ -1,2 +1,8 @@
 fastapi
 uvicorn
+websockets
+assemblyai
+dotenv
+aiohttp
+Jinja2
+python-multipart

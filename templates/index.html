@@ -3,27 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Voice Agent</title>
+  <title>Dexter Voice Agent</title>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
+  <!-- Settings Button (top-right) -->
+  <button id="settings-btn" class="settings-button">⚙️</button>
+
   <div class="container">
-    <h1>🎙️ Voice Agent</h1>
+    <h1>🩸 Dexter’s Voice Agent</h1>
+    <p class="subtitle">"Sometimes my dark passenger prefers to listen..."</p>
 
     <!-- Single Record Button -->
-    <button id="record-btn" class="mic-button">🎤 Start Recording</button>
+    <button id="record-btn" class="mic-button">🎤 Begin Surveillance</button>
 
-    <!-- Status & Transcription -->
-    <div id="upload-status" class="status-text"></div>
-    <div id="transcription" class="transcription-text"></div>
+    <!-- Chat log container -->
+    <div id="transcription">
+      <div id="upload-status" class="status-text"></div>
+      <div class="transcription-text"></div>
+    </div>
+  </div>
 
-    <!-- Hidden Audio Player -->
-    <audio id="echo-audio" style="display:none;"></audio>
-
-    <!-- Download Link -->
-    <a id="download-link" href="#" style="display: none;" target="_blank">
-      ⬇️ Download your recording
-    </a>
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal hidden" aria-hidden="true">
+    <div class="modal__backdrop"></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <h2 id="settings-title">API Config</h2>
+      <p class="muted">Enter API Keys to be used instead of the server’s .env for your session.</p>
+  
+      <label>AssemblyAI Key
+        <input id="key-aai" type="password" placeholder="AAI..." autocomplete="off">
+      </label>
+      <label>Gemini Key
+        <input id="key-gemini" type="password" placeholder="GEMINI..." autocomplete="off">
+      </label>
+      <label>Murf Key
+        <input id="key-murf" type="password" placeholder="MURF..." autocomplete="off">
+      </label>
+      <label>NewsAPI Key
+        <input id="key-news" type="password" placeholder="NEWSAPI..." autocomplete="off">
+      </label>
+      <label>WeatherAPI Key
+        <input id="key-weather" type="password" placeholder="WEATHER..." autocomplete="off">
+      </label>
+  
+      <div class="modal__row">
+        <label>Session ID
+          <input id="session-id" type="text" placeholder="optional (auto if empty)">
+        </label>
+      </div>
+  
+      <div class="modal__actions">
+        <button id="settings-cancel" class="btn ghost">Cancel</button>
+        <button id="settings-save" class="btn">Save</button>
+      </div>
+    </div>
   </div>
 
   <script src="/static/script.js"></script>

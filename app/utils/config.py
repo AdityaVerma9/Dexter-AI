@@ -8,9 +8,11 @@ load_dotenv()
 @dataclass(frozen=True)
 class Settings:
     # API Keys
-    MURF_API_KEY: str = os.getenv("MURF_API_KEY", "")
-    ASSEMBLYAI_API_KEY: str = os.getenv("ASSEMBLYAI_API_KEY", "")
-    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    MURF_API_KEY: str = os.getenv("MURF_API_KEY")
+    ASSEMBLYAI_API_KEY: str = os.getenv("ASSEMBLYAI_API_KEY")
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY")
+    NEWSAPI_KEY: str = os.getenv("NEWSAPI_KEY")
+    WEATHER_API_KEY: str = os.getenv("WEATHER_API_KEY")
 
     # External endpoints & models
     MURF_TTS_ENDPOINT: str = os.getenv("MURF_TTS_ENDPOINT", "https://api.murf.ai/v1/speech/generate")

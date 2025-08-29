@@ -3,18 +3,26 @@ import assemblyai as aai
 from typing import Optional
 
 class STTService:
-    def __init__(self, api_key: str, timeout: int):
-        if not api_key:
-            raise ValueError("AssemblyAI API key is required")
-        aai.settings.api_key = api_key
+    def __init__(self, default_api_key: Optional[str], timeout: int):
+        """
+        Initialize with a default API key (e.g., from .env).
+        """
+        self.default_api_key = default_api_key
         self.timeout = timeout
 
-    async def transcribe_file(self, filepath: str) -> str:
+    async def transcribe_file(self, filepath: str, api_key: Optional[str] = None) -> str:
         """
-        Transcribe a local audio file using AssemblyAI in a thread to avoid blocking.
-        Returns the transcribed text (empty string if nothing).
+        Transcribe a local audio file using AssemblyAI.
+        If api_key is provided, it overrides the default.
+        Runs in a thread to avoid blocking.
         """
+        key = api_key or self.default_api_key
+        if not key:
+            raise ValueError("AssemblyAI API key is required")
+
         def _transcribe():
+            # IMPORTANT: set the key inside the thread for this call
+            aai.settings.api_key = key
             transcriber = aai.Transcriber()
             transcript = transcriber.transcribe(filepath)
             return getattr(transcript, "text", "") or ""

@@ -1,89 +1,422 @@
-/* existing style.css content unchanged */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #2c3e50, #3498db);
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+/* Dexter Voice Agent — Full Theme (style.css)
+   Version: 1.0
+   Notes: Drop this file at /static/style.css and use the provided HTML.
+*/
+body{
+  background-image: url("static/img/blood-spatter.jpg");
 }
+/* ---------------------------
+   Root variables for easy tweaks
+   --------------------------- */
+   :root{
+    --bg-1: #0d0d0d;
+    --bg-2: #141414;
+    --panel: rgba(20,20,20,0.92);
+    --accent-red: #e60000;
+    --accent-deep: #b30000;
+    --muted: #bfbfbf;
+    --glass: rgba(255,255,255,0.03);
+    --mono: "Courier New", Courier, monospace;
+    --serif: "Georgia", serif;
+    --ui-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --radius: 14px;
+  }
+  
+  /* ---------------------------
+     Page + background
+     --------------------------- */
+  * { box-sizing: border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+  html,body {
+    height: 100%;
+    margin: 0;
+    font-family: var(--ui-font);
+    background: linear-gradient(135deg, var(--bg-1), #111111 60%);
+    color: #f5f5f5;
+  }
+  
+  /* Subtle animated blood splatter background (keeps pointer-events: none) */
+  body::before{
+    content: "";
+    position: fixed;
+    inset: 0;
 
-/* ... rest of CSS ... */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #2c3e50, #3498db);
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+    background-repeat: repeat;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+    animation: splatter-fade 20s ease-in-out infinite alternate;
+  }
 
-.container {
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-}
+  
+  /* Centering container */
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    overflow: auto;
+  }
+  
+  /* ---------------------------
+     Main container (forensic casebox)
+     --------------------------- */
+  .container {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    background: linear-gradient(180deg, rgba(18,18,18,0.98), rgba(12,12,12,0.96));
+    border-radius: calc(var(--radius) + 6px);
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 30px rgba(179,0,0,0.06) inset;
+    border: 1px solid rgba(179,0,0,0.08);
+    z-index: 2;
+    overflow: hidden;
+  }
+  
+  /* Forensic "tape" tag (top-right) */
+  .container::after {
+    content: "CRIME SCENE // DO NOT CROSS";
+    position: absolute;
+    top: 10px;
+    right: -36px;
+    transform: rotate(18deg);
+    font-size: 0.72rem;
+    color: var(--accent-deep);
+    background: rgba(10,10,10,0.85);
+    padding: 6px 12px;
+    letter-spacing: 1.2px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,0,0,0.06);
+    pointer-events: none;
+    opacity: 0.9;
+  }
+  
+  /* ---------------------------
+     Heading & subtitle
+     --------------------------- */
+  h1 {
+    margin: 0 0 6px 0;
+    font-size: 1.9rem;
+    color: var(--accent-red);
+    letter-spacing: 0.6px;
+    text-shadow: 0 0 8px rgba(230,0,0,0.45);
+    font-weight: 800;
+    font-family: "Impact", var(--ui-font), sans-serif;
+  }
+  
+  .subtitle {
+    margin: 0 0 18px 0;
+    color: var(--muted);
+    font-style: italic;
+    font-family: var(--serif);
+    opacity: 0.95;
+    text-shadow: 0 0 3px rgba(200,0,0,0.12);
+    font-size: 0.98rem;
+  }
+  
+  /* ---------------------------
+     Recorder button (big tactile)
+     --------------------------- */
+  .mic-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    width: 100%;
+    padding: 0.95rem 1rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: .4px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent-deep), var(--accent-red));
+    box-shadow: 0 6px 20px rgba(230,0,0,0.22), 0 1px 0 rgba(255,255,255,0.02) inset;
+    transition: transform .12s ease, box-shadow .18s ease, filter .12s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Hover & active */
+  .mic-button:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(230,0,0,0.28); filter: saturate(1.05); }
+  .mic-button:active { transform: translateY(0); box-shadow: 0 6px 14px rgba(0,0,0,0.6); }
+  
+  /* Focus accessibility */
+  .mic-button:focus { outline: 3px solid rgba(230,0,0,0.16); outline-offset: 2px; }
+  
+  /* Recording state — flips to green, pulses and shows small VU meter */
+  .mic-button.recording {
+    background: linear-gradient(135deg, #008a3a, #00b858);
+    box-shadow: 0 8px 28px rgba(0,200,80,0.18), 0 0 28px rgba(0,200,80,0.06) inset;
+    animation: recordingPulse 1.2s infinite;
+    transform: none;
+  }
+  @keyframes recordingPulse {
+    0% { box-shadow: 0 0 0 0 rgba(0,200,80,0.18); }
+    60% { box-shadow: 0 0 0 22px rgba(0,200,80,0.00); }
+    100% { box-shadow: 0 0 0 0 rgba(0,200,80,0.00); }
+  }
+  
+  /* small icon styling inside the button if you want to include svg/icon */
+  .mic-button .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    font-size: 1.15rem;
+  }
+  
+  /* ---------------------------
+     Status & transcript wrappers
+     --------------------------- */
+  .status-text {
+    margin-top: 0.85rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    opacity: 0.95;
+    font-style: italic;
+  }
+  
+  /* Transcription container */
+  #transcription {
+    margin-top: 1.2rem;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  
+  /* Custom scrollbar (webkit) */
+  #transcription::-webkit-scrollbar { width: 9px; height: 9px; }
+  #transcription::-webkit-scrollbar-track { background: rgba(0,0,0,0.4); border-radius: 6px; }
+  #transcription::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(179,0,0,0.9), rgba(230,0,0,0.95));
+    border-radius: 6px;
+    border: 2px solid rgba(0,0,0,0.2);
+  }
+  
+  /* Transcript text block (case notes vibe) */
+  .transcription-text {
+    width: 100%;
+    min-height: 72px;
+    max-height: 320px;
+    overflow: auto;
+    padding: 1rem;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-left: 4px solid var(--accent-deep);
+    box-shadow: inset 0 6px 28px rgba(0,0,0,0.6), 0 6px 18px rgba(0,0,0,0.6);
+    font-family: var(--mono);
+    font-size: 0.96rem;
+    white-space: pre-wrap;
+    color: #e9e9e9;
+    line-height: 1.45;
+    word-break: break-word;
+  }
+  
+  /* subtle "case file" header on the transcript */
+  .transcription-text::before {
+    content: "CASE NOTES:";
+    display: block;
+    font-size: 0.72rem;
+    color: rgba(230,0,0,0.95);
+    margin-bottom: .6rem;
+    letter-spacing: .8px;
+    font-weight: 700;
+    font-family: var(--serif);
+  }
+  
+  /* ---------------------------
+     Chat/message styles (if you add messages)
+     --------------------------- */
+  .message {
+    padding: 10px 12px;
+    border-radius: 10px;
+    max-width: 88%;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    word-break: break-word;
+    display: inline-block;
+  }
+  
+  /* User messages (sterile) */
+  .message.user {
+    align-self: flex-end;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid rgba(230,0,0,0.16);
+    color: #fff;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.6);
+  }
+  
+  /* Received / system messages (blood-tinged) */
+  .message.received {
+    align-self: flex-start;
+    background: rgba(179,0,0,0.08);
+    border-left: 3px solid rgba(255,0,0,0.22);
+    color: #ffecec;
+  }
+  
+  /* Dexter inner-monologue */
+  .message.dexter {
+    background: rgba(255,0,0,0.04);
+    border-left: 4px solid rgba(204,0,0,0.9);
+    font-style: italic;
+    color: #f6f0ef;
+    font-family: var(--serif);
+    text-shadow: 0 0 3px rgba(200,0,0,0.32);
+    padding-left: 16px;
+    position: relative;
+  }
+  
+  /* small label above dexter's messages */
+  .message.dexter::before {
+    content: "Dexter’s Thoughts";
+    position: absolute;
+    top: -16px;
+    left: 8px;
+    font-size: 0.70rem;
+    color: var(--accent-deep);
+    opacity: 0.9;
+    font-weight: 700;
+    letter-spacing: .6px;
+  }
+  
+  /* Audio element inside messages */
+  .message audio {
+    width: 100%;
+    margin-top: 8px;
+    background: #080808;
+    border-radius: 6px;
+    outline: none;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  }
+  
+  /* Try to style native webkit audio controls (best-effort) */
+  audio::-webkit-media-controls-panel { background: rgba(15,15,15,0.95); border-radius: 6px; }
+  audio::-webkit-media-controls-play-button { filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)); }
+  
+  /* ---------------------------
+     Tiny VU meter / waveform hint next to record btn
+     --------------------------- */
+  .vu-wrapper {
+    display: flex;
+    gap: .4rem;
+    margin-top: .65rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .vu {
+    width: 4px;
+    height: 12px;
+    background: linear-gradient(180deg, var(--accent-red), var(--accent-deep));
+    border-radius: 2px;
+    opacity: 0.9;
+    transform-origin: bottom;
+    animation: vuFloat 900ms infinite ease-in-out;
+  }
+  .vu:nth-child(2) { animation-delay: 120ms; height: 18px; }
+  .vu:nth-child(3) { animation-delay: 240ms; height: 24px; }
+  .vu:nth-child(4) { animation-delay: 360ms; height: 16px; }
+  @keyframes vuFloat {
+    0% { transform: scaleY(.35); opacity: .45; }
+    50% { transform: scaleY(1.15); opacity: 1; }
+    100% { transform: scaleY(.45); opacity: .6; }
+  }
+  
+  /* ---------------------------
+     Small device responsiveness
+     --------------------------- */
+  @media (max-width: 520px) {
+    .container { padding: 1.25rem; border-radius: 12px; }
+    h1 { font-size: 1.4rem; }
+    .subtitle { font-size: 0.9rem; margin-bottom: 1rem; }
+    .mic-button { font-size: 1rem; padding: .85rem; }
+    .transcription-text { font-size: 0.92rem; padding: .85rem; }
+  }
+  
+  /* ---------------------------
+     Print / reduced motion accessibility
+     --------------------------- */
+  @media (prefers-reduced-motion: reduce) {
+    body::before, .mic-button.recording, .vu { animation: none !important; }
+  }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-.mic-button {
-  background-color: #e74c3c;
-  border: none;
-  color: white;
-  padding: 1rem 2rem;
+/* --- Settings Modal --- */
+.settings-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   font-size: 1.2rem;
-  border-radius: 50px;
+  padding: 0.4rem 0.6rem;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.1s ease;
-  width: 100%;
+  background: #222;
+  color: #fff;
+}
+.settings-button:hover {
+  background: #444;
 }
 
-.mic-button:hover {
-  background-color: #c0392b;
+/* Modal basics */
+.modal.hidden { display: none; }
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
-
-.mic-button.recording {
-  background-color: #27ae60;
-  animation: pulse 1s infinite;
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
 }
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.6); }
-  70% { box-shadow: 0 0 0 15px rgba(39, 174, 96, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
+.modal__panel {
+  position: relative;
+  background: #111;
+  color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  z-index: 1;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
-
-.status-text {
-  margin-top: 1rem;
-  font-size: 1rem;
-  opacity: 0.9;
-}
-
-.transcription-text {
-  margin-top: 1rem;
-  font-size: 1rem;
-  white-space: pre-wrap;
-  background: rgba(255,255,255,0.1);
-  padding: 1rem;
-  border-radius: 10px;
-  text-align: left;
-}
-
-#download-link {
-  display: inline-block;
-  margin-top: 1rem;
-  color: #1abc9c;
-  text-decoration: underline;
+.modal__panel label {
+  display: block;
+  margin-top: 0.8rem;
   font-size: 0.9rem;
 }
+.modal__panel input {
+  width: 100%;
+  padding: .65rem .75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(179,0,0,0.18);
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  outline: none;
+}
+
+.btn {
+  background: linear-gradient(135deg, var(--accent-deep), var(--accent-red));
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: .6rem .95rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn.ghost {
+  background: rgba(255,255,255,0.06);
+  color: #ccc;
+}
+.btn.ghost:hover { background: #333; }
+
