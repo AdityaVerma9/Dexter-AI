@@ -6,4 +6,4 @@ dotenv
 aiohttp
 Jinja2
 python-multipart
-newsapi
+newsapi-python
