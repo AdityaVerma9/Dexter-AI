@@ -12,6 +12,7 @@ It’s built on **FastAPI** with a clean, modular service design. Beyond convers
 - [✨ Project Summary](#-project-summary)
 - [🔑 Key Functionalities](#-key-functionalities)
 - [🏗️ Architecture](#️-architecture)
+- [Sequence Diagram](#️-sequence-diagram)
 - [🛠️ Technologies](#️-technologies)
 - [⚙️ Features & Endpoints](#️-features--endpoints)
 - [⚡ Running Locally](#-running-locally)
@@ -46,56 +47,82 @@ Dexter AI demonstrates a modern streaming assistant pipeline:
 ## 🏗️ Architecture
 
 ### Detailed Flow
-```mermaid
-graph TD;
-  subgraph Browser Client
-    A1[Microphone Input]
-    A2[Encode Audio Chunks]
-    A3[Open WebSocket]
-    A1 --> A2 --> A3
+flowchart TD
+  %% Browser client
+  subgraph Browser_Client
+    A1["Microphone Input"]
+    A2["Encode Audio Chunks"]
+    A3["Open WebSocket"]
+    A1 --> A2
+    A2 --> A3
   end
 
-  subgraph FastAPI Server
-    B1[WS Handler (/ws/stream)]
-    B2[Session Manager (state.py)]
-    B3[STT Service → AssemblyAI]
-    B4[LLM Service → Google GenAI]
-    B5[TTS Service → Murf]
-    B6[News Service]
-    B7[Weather Service]
-    B8[History & Persona Manager]
-    
-    A3 --> B1
-    B1 --> B2
-    B1 --> B3
-    B3 --> B4
-    B4 --> B5
-    B4 --> B6
-    B4 --> B7
-    B2 --> B8
+  %% FastAPI Server internals
+  subgraph FastAPI_Server
+    B1["WS Handler (/ws/stream)"]
+    B2["Session Manager (state.py)"]
+    B3["STT Service: AssemblyAI"]
+    B4["LLM Service: Google GenAI"]
+    B5["TTS Service: Murf"]
+    B6["News Service"]
+    B7["Weather Service"]
+    B8["History & Persona Manager"]
   end
 
-  subgraph External Services
-    C1[assembly.ai STT API]
-    C2[google.genai LLM API]
-    C3[murf TTS API]
-    C4[News API]
-    C5[Weather API]
-
-    B3 --> C1
-    B4 --> C2
-    B5 --> C3
-    B6 --> C4
-    B7 --> C5
+  %% External APIs
+  subgraph External_Services
+    C1["assembly.ai STT API"]
+    C2["google.genai LLM API"]
+    C3["murf TTS API"]
+    C4["News API"]
+    C5["Weather API"]
   end
 
-  subgraph Browser Playback
-    D1[Display Live Transcript]
-    D2[Play TTS Audio]
-    B5 --> D2
-    B4 --> D1
+  %% Browser playback
+  subgraph Browser_Playback
+    D1["Display Live Transcript"]
+    D2["Play TTS Audio"]
   end
-```
+
+  %% Connections
+  A3 --> B1
+  B1 --> B2
+  B1 --> B3
+  B3 --> B4
+  B4 --> B5
+  B4 --> B6
+  B4 --> B7
+  B2 --> B8
+
+  B3 --> C1
+  B4 --> C2
+  B5 --> C3
+  B6 --> C4
+  B7 --> C5
+
+  B5 --> D2
+  B4 --> D1
+
+---
+## 🏗️ Sequence Diagram
+sequenceDiagram
+  participant Browser
+  participant Server
+  participant AssemblyAI
+  participant GenAI
+  participant Murf
+
+  Browser->>Server: Open WebSocket (/ws/stream)
+  Browser->>Server: Send audio chunk (binary)
+  Server->>AssemblyAI: Forward audio chunk (stream)
+  AssemblyAI-->>Server: Partial transcript (stream)
+  Server->>GenAI: Send transcript + context (stream)
+  GenAI-->>Server: Streamed LLM tokens / partial response
+  Server->>Murf: Request TTS for final text
+  Murf-->>Server: Return TTS audio (URL or binary)
+  Server-->>Browser: Send transcript + audio URL / playback command
+  Browser->>Browser: Play audio, display transcript
+
 ---
 
 ## 🛠️ Technologies
