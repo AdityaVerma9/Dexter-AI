@@ -43,44 +43,42 @@ Dexter AI demonstrates a modern streaming assistant pipeline:
 ## Architecture
 
 ### Detailed Flow
-Paste the block below into a markdown file or GitHub README using a fenced mermaid block. This is GitHub-compatible (no emojis inside nodes).
-
 ```mermaid
 flowchart TD
   %% Browser client
   subgraph Browser_Client
-    A1[Microphone Input]
-    A2[Encode Audio Chunks]
-    A3[Open WebSocket (/ws/stream)]
+    A1["Microphone Input"]
+    A2["Encode Audio Chunks"]
+    A3["Open WebSocket (/ws/stream)"]
     A1 --> A2
     A2 --> A3
   end
 
   %% FastAPI Server internals
   subgraph FastAPI_Server
-    B1[WS Handler (/ws/stream)]
-    B2[Session Manager (state.py)]
-    B3[STT Service: AssemblyAI]
-    B4[LLM Service: Google GenAI]
-    B5[TTS Service: Murf]
-    B6[News Service]
-    B7[Weather Service]
-    B8[History & Persona Manager]
+    B1["WS Handler (/ws/stream)"]
+    B2["Session Manager (state.py)"]
+    B3["STT Service: AssemblyAI"]
+    B4["LLM Service: Google GenAI"]
+    B5["TTS Service: Murf"]
+    B6["News Service"]
+    B7["Weather Service"]
+    B8["History & Persona Manager"]
   end
 
   %% External APIs
   subgraph External_Services
-    C1[assembly.ai STT API]
-    C2[google.genai LLM API]
-    C3[murf TTS API]
-    C4[News API]
-    C5[Weather API]
+    C1["assembly.ai STT API"]
+    C2["google.genai LLM API"]
+    C3["murf TTS API"]
+    C4["News API"]
+    C5["Weather API"]
   end
 
   %% Browser playback
   subgraph Browser_Playback
-    D1[Display Live Transcript]
-    D2[Play TTS Audio]
+    D1["Display Live Transcript"]
+    D2["Play TTS Audio"]
   end
 
   %% Connections
