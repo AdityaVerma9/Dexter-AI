@@ -1,8 +1,8 @@
 # 🎙️ Dexter AI — Streaming Voice Agent
 
-![Dexter AI Banner](https://img.shields.io/badge/Voice-Agent-Streaming-blue?style=for-the-badge) ![FastAPI](https://img.shields.io/badge/FastAPI-🚀-green?style=for-the-badge) ![WebSockets](https://img.shields.io/badge/WebSockets-Live-orange?style=for-the-badge)
+![FastAPI](https://img.shields.io/badge/FastAPI-🚀-green?style=for-the-badge) ![WebSockets](https://img.shields.io/badge/WebSockets-Live-orange?style=for-the-badge)
 
-**Dexter AI** is a persona-driven, real-time **streaming voice agent** 🗣️. It listens to your microphone, understands you through **speech-to-text (STT)**, reasons with an **LLM**, and replies with **text-to-speech (TTS)** — all in real time ⚡. Default persona: *Dexter Morgan* 🩸 (yes, that Dexter 😏).
+**Dexter AI** is a persona-driven, real-time **streaming voice agent** 🗣️. It listens to your microphone, understands you through **speech-to-text (STT)**, reasons with an **LLM**, and replies with **text-to-speech (TTS)** — all in real time ⚡. Default persona: *Dexter Morgan* 🩸.
 
 It’s built on **FastAPI** with a clean, modular service design. Beyond conversations, it can fetch you **latest news** 📰, **weather updates** 🌦️, and handle **file uploads & transcriptions** 🎧.
 
