@@ -48,54 +48,53 @@ Dexter AI demonstrates a modern streaming assistant pipeline:
 ### Detailed Flow
 ```mermaid
 graph TD;
-    subgraph Browser Client 🌐
-        A1[🎤 Microphone Input]
-        A2[📦 Audio Chunks Encoding]
-        A3[🔌 WebSocket Connection]
-        A1 --> A2 --> A3
-    end
+  subgraph Browser Client
+    A1[Microphone Input]
+    A2[Encode Audio Chunks]
+    A3[Open WebSocket]
+    A1 --> A2 --> A3
+  end
 
-    subgraph FastAPI Server 🚀
-        B1[🌐 WS Handler /ws/stream]
-        B2[📡 Session Manager (state.py)]
-        B3[📝 STT Service - AssemblyAI]
-        B4[🧠 LLM Service - Google GenAI]
-        B5[🎶 TTS Service - Murf]
-        B6[📰 News Service - NewsAPI]
-        B7[🌦️ Weather Service - WeatherAPI]
-        B8[📜 History & Persona Manager]
-
-        B1 --> B2
-        B1 --> B3
-        B3 -->|Transcript| B4
-        B4 -->|Response Text| B5
-        B4 --> B6
-        B4 --> B7
-        B2 --> B8
-    end
-
-    subgraph External Services ☁️
-        C1[AssemblyAI STT API]
-        C2[Google GenAI API]
-        C3[Murf TTS API]
-        C4[NewsAPI]
-        C5[WeatherAPI]
-    end
-
-    subgraph Browser Playback 🎧
-        D1[📝 Live Transcript Display]
-        D2[🔊 Audio Playback]
-    end
-
+  subgraph FastAPI Server
+    B1[WS Handler (/ws/stream)]
+    B2[Session Manager (state.py)]
+    B3[STT Service → AssemblyAI]
+    B4[LLM Service → Google GenAI]
+    B5[TTS Service → Murf]
+    B6[News Service]
+    B7[Weather Service]
+    B8[History & Persona Manager]
+    
     A3 --> B1
+    B1 --> B2
+    B1 --> B3
+    B3 --> B4
+    B4 --> B5
+    B4 --> B6
+    B4 --> B7
+    B2 --> B8
+  end
+
+  subgraph External Services
+    C1[assembly.ai STT API]
+    C2[google.genai LLM API]
+    C3[murf TTS API]
+    C4[News API]
+    C5[Weather API]
+
     B3 --> C1
     B4 --> C2
     B5 --> C3
     B6 --> C4
     B7 --> C5
+  end
+
+  subgraph Browser Playback
+    D1[Display Live Transcript]
+    D2[Play TTS Audio]
     B5 --> D2
     B4 --> D1
-```
+  end
 
 ---
 
