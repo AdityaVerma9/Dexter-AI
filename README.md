@@ -163,11 +163,3 @@ Notes:
 Add whichever license you prefer (e.g., MIT). This repository contains 3rd‑party SDK usage — be mindful of each provider's terms of service.
 
 ---
-
-If you want, I can:
-- generate a `README.md` file in the repo (I already prepared one here),
-- create a quick `docker-compose` + `Dockerfile` example for local dev,
-- or produce example client code for connecting to `/ws/stream` (browser + Node) and demonstrate exact message formats.
-
-Tell me which of the above you'd like next.
-
