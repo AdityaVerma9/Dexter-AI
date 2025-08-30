@@ -46,6 +46,7 @@ Dexter AI demonstrates a modern streaming assistant pipeline:
 ## 🏗️ Architecture
 
 ### Detailed Flow
+```mermaid
 graph TD;
   subgraph Browser Client
     A1[Microphone Input]
@@ -94,7 +95,7 @@ graph TD;
     B5 --> D2
     B4 --> D1
   end
-
+```
 ---
 
 ## 🛠️ Technologies
